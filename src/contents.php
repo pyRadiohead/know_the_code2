@@ -13,13 +13,33 @@ add_action('genesis_before_loop',__NAMESPACE__ . '\render_content');
  */
 function render_content(){
 
-    //get the ID
+    if ( ! is_home()){
+        return;
+    }
+
+    $posts_page = get_posts_page();
+
+     if (!posts_page){
+         return;
+     }
+    echo $posts_page->post_content;
+
+
+}
+
+/**
+ * Description: Get Posts page
+ *
+ * @return |\WP_Post|null
+ * @since 1.0.0
+ *
+ */
+function get_posts_page(){
+
     $posts_page_id = get_option('page_for_posts');
+    return get_post($posts_page_id);
 
-    //tell Wordpress get the post object
-    $post_object = get_post($posts_page_id);
-
-    //post_content
-    echo $post_object->post_content;
-
+}
+function prepare_content_for_rendering(){
+    
 }
